@@ -1,6 +1,7 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/tauri";
+import { CustomAreaChart } from "./CustomAreaChart";
 import "./App.css";
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-
+      <CustomAreaChart />
       <p>Click on the Tauri, Vite, and React logos to learn more.</p>
 
       <form
