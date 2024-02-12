@@ -1,53 +1,49 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/tauri";
+import { ChakraProvider, Box } from "@chakra-ui/react";
+import TemperatureGraph from "./compoments/TemperatureGraph"; // Adjust the path as necessary
+import { ChartData } from 'chart.js';
 import "./App.css";
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+    const [greetMsg, setGreetMsg] = useState("");
+    const [name, setName] = useState("");
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke("greet", { name }));
-  }
+    async function greet() {
+        setGreetMsg(await invoke("greet", { name }));
+    }
 
-  return (
-    <div className="container">
-      <h1>Welcome to Tauri!</h1>
+    const temperatureData: ChartData<'line'> = {
+        labels: ['9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00'],
+        datasets: [
+            {
+                label: 'Temperature Sensor 1',
+                data: [22, 19, 27, 23, 25, 29, 31],
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            },
+            {
+                label: 'Temperature Sensor 2',
+                data: [20, 21, 25, 26, 28, 30, 32],
+                borderColor: 'rgb(53, 162, 235)',
+                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            },
+        ],
+    };
 
-      <div className="row">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-
-      <p>{greetMsg}</p>
-    </div>
-  );
+    return (
+        <ChakraProvider>
+            <div className="container">
+                {/* Existing content */}
+                <Box display="flex" justifyContent="left">
+                    <div style={{ width: '50%', height: 'auto', padding: 20 }}>
+                        <TemperatureGraph data={temperatureData} />
+                    </div>
+                </Box>
+            </div>
+        </ChakraProvider>
+    );
 }
 
 export default App;
