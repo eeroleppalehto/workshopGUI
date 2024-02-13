@@ -1,6 +1,3 @@
-import React, { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/tauri";
 import { ChakraProvider, Box, Flex } from "@chakra-ui/react";
 import TemperatureGraph from "./compoments/TemperatureGraph";
 import ScrollableButtons from "./compoments/ScrollableButtons"; // Ensure this is imported correctly
@@ -8,12 +5,6 @@ import { ChartData } from 'chart.js';
 import "./App.css";
 
 function App() {
-    const [greetMsg, setGreetMsg] = useState("");
-    const [name, setName] = useState("");
-
-    async function greet() {
-        setGreetMsg(await invoke("greet", { name }));
-    }
 
     const temperatureData: ChartData<'line'> = {
         labels: ['9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00'],
@@ -37,14 +28,14 @@ function App() {
     return (
         <ChakraProvider>
             <div className="container">
-            <Flex direction="row" justify="space-between" align="start" className="container">
-                <Box flex="1" minWidth="0" maxWidth="60%" padding="20px">
-                    <TemperatureGraph data={temperatureData} />
-                </Box>
-                <Box flex="1" minWidth="0" maxWidth="40%" padding="20px" height="200px" overflowY="auto">
-                    <ScrollableButtons />
-                </Box>
-            </Flex>
+                <Flex direction="row" justify="space-between" align="start" className="container">
+                    <Box flex="1" minWidth="0" maxWidth="60%" padding="20px">
+                        <TemperatureGraph data={temperatureData} />
+                    </Box>
+                    <Box flex="1" minWidth="0" maxWidth="40%" padding="20px" height="200px" overflowY="auto">
+                        <ScrollableButtons />
+                    </Box>
+                </Flex>
             </div>
         </ChakraProvider>
     );
