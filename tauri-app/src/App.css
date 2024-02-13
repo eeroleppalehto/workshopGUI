@@ -5,3 +5,13 @@
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafb);
 }
+.container {
+  height: 100vh; /* Use the full height of the viewport */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Additional styles to ensure Flex children stretch appropriately */
+.container > div {
+  flex: 1;
+}
