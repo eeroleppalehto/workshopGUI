@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Button, VStack } from '@chakra-ui/react';
+import productionData from '../OroductionData.json'; // Make sure the path is correct
 
 const ScrollableButtons: React.FC = () => {
     return (
@@ -12,7 +13,7 @@ const ScrollableButtons: React.FC = () => {
         >
             <VStack>
                 {/* Generate buttons - you can replace these with any content you need */}
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((buttonNumber) => (
+                {[, 2, 3, 4, 5, 6, 7, 8].map((buttonNumber) => (
                     <Button key={buttonNumber}>Button {buttonNumber}</Button>
                 ))}
             </VStack>

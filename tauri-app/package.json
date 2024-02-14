@@ -16,15 +16,19 @@
     "@tauri-apps/api": "^1.5.3",
     "chart.js": "^4.4.1",
     "framer-motion": "^11.0.3",
+    "lodash": "^4.17.21",
+    "lodash.isequal": "^4.5.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-gauge-chart": "^0.4.1"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.8",
     "@types/chart.js": "^2.9.41",
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
+    "@types/react-gauge-chart": "^0.4.3",
     "@vitejs/plugin-react": "^4.2.1",
     "typescript": "^5.0.2",
     "vite": "^5.0.0"

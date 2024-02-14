@@ -1,17 +1,49 @@
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
+/* Remove default margins and paddings introduced by the browser */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background: #fff; /* Set background to white */
+  overflow: hidden; /* Optional: to prevent scrollbars if not needed */
 }
 
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafb);
-}
+/* Set up the container to use all available space and have a white background */
 .container {
-  height: 100vh; /* Use the full height of the viewport */
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns, each taking up half of the container width */
+  grid-template-rows: 1.5fr 0.8fr; /* Top row is larger than the bottom row */
+  gap: 1rem; /* Space between grid items */
+  height: 100%; /* Fill the height of the viewport */
+  width: 100%; /* Fill the width of the viewport */
+  background: #fff; /* Set background to white */
+  /* Other styles... */
 }
 
-/* Additional styles to ensure Flex children stretch appropriately */
+/* Ensure individual grid items fill their cells and have a white background */
 .container > div {
-  flex: 1;
+  background: #fff; /* Set background to white */
+  /* Add other styling as needed */
 }
+
+.machine-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* create three columns */
+  grid-gap: 10px; /* space between rows and columns */
+  margin: 10px; /* adjust as needed */
+  border-radius: 10px; /* rounded corners */
+  overflow: hidden; /* ensures the child elements do not overflow the rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
+  padding: 16px; /* spacing inside the container */
+}
+
+.header {
+  font-weight: bold;
+  padding-bottom: 10px; /* space between header and items */
+  border-bottom: 2px solid #ccc; /* line under headers */
+}
+
+/* Add additional styling for individual cells if needed */
+
+
+/* You can add additional styling for other components as needed */

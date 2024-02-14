@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Welding item Auf Lock",
+    "temperature": "400",
+    "weldingTime": "1:20",
+    "energyConsumption": "1:20"
+  },
+  {
+    "name": "Welding item B",
+    "degree": "300",
+    "weldingTime": "3:20",
+    "energyConsumption": "3:20"
+  },
+  {
+    "name": "Welding item C",
+    "degree": "250",
+    "weldingTime": "4:40",
+    "energyConsumption": "4:40"
+  },
+  {
+    "name": "Welding item D",
+    "degree": "100",
+    "weldingTime": "9:20",
+    "energyConsumption": "9:20"
+  }
+]
