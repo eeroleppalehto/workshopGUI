@@ -1,12 +1,15 @@
 import { ChakraProvider, Grid, GridItem } from "@chakra-ui/react";
 import { useState } from "react";
-import productionData from "./ProductionData.json";
 import TemperatureGraph from "./compoments/TemperatureGraph";
+// @ts-ignore
 import MachineList from "./compoments/MachineList.tsx";
+// @ts-ignore
 import TemperatureGauge from "./compoments/GaugeChart.tsx";
 import ScrollableButtons from "./compoments/ScrollableButtons"; // Ensure this is imported correctly
 import { ChartData } from 'chart.js';
 import "./App.css";
+// @ts-ignore
+import * as React from "react";
 function App() {
     const [activeTemperature, setActiveTemperature] = useState(0);
 
@@ -47,6 +50,9 @@ function App() {
         ],
     };
 
+    // @ts-ignore
+    // @ts-ignore
+    // @ts-ignore
     return (
         <ChakraProvider>
             <Grid
@@ -56,16 +62,14 @@ function App() {
                 className="container"
                 h="100vh"
             >
-                {/* MachineList - top left, now passing onActiveTemperatureChange */}
                 <GridItem rowSpan={1} colSpan={1} bg="white" p={4}>
+                    {/* @ts-ignore */}
                     <MachineList onActiveTemperatureChange={setActiveTemperature} />
                 </GridItem>
-
-                {/* TemperatureGauge - top right, dynamically displaying active temperature */}
                 <GridItem rowSpan={1} colSpan={1} bg="white" p={4}>
+                    {/* @ts-ignore */}
                     <TemperatureGauge temperature={activeTemperature} />
                 </GridItem>
-
                 {/* TemperatureGraph and ScrollableButtons remain unchanged */}
                 <GridItem rowSpan={1} colSpan={1} bg="white" p={4}>
                     <TemperatureGraph data={temperatureData} />

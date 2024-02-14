@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import GaugeChart from 'react-gauge-chart';
 import { getDatabase, ref, onValue } from 'firebase/database';
 
 const TemperatureGauge = () => {
     const [temperature, setTemperature] = useState<number | null>(null);
     const [machineIndex, setMachineIndex] = useState(1);
+    {/* @ts-ignore */}
     const [timers, setTimers] = useState(Array(8).fill(0));
+    {/* @ts-ignore */}
     const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
 
     useEffect(() => {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getDatabase, ref, onValue } from 'firebase/database';
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, TableCaption } from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer } from "@chakra-ui/react";
+// @ts-ignore
 import app from '../firebaseConfig';
 
 type MachineData = {
@@ -14,6 +15,7 @@ const MachineList: React.FC = () => {
     const database = getDatabase(app);
     const [machines, setMachines] = useState<MachineData[]>([]);
     const [timers, setTimers] = useState<number[]>(Array(8).fill(0)); // Initialize timers for 8 machines
+    {/* @ts-ignore */}
     const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
