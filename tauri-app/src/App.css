@@ -26,24 +26,18 @@ html, body, #root {
   /* Add other styling as needed */
 }
 
-.machine-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* create three columns */
-  grid-gap: 10px; /* space between rows and columns */
-  margin: 10px; /* adjust as needed */
-  border-radius: 10px; /* rounded corners */
-  overflow: hidden; /* ensures the child elements do not overflow the rounded corners */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
-  padding: 16px; /* spacing inside the container */
+.machine-list-item {
+  font-size: 1.2em; /* Adjust this value as needed */
 }
+
+/* If there are headers or specific sections, you may want to target them separately */
+.machine-list .header {
+  font-size: 1.4em; /* Adjust this value as needed for headers */
+}
+
 
 .header {
   font-weight: bold;
   padding-bottom: 10px; /* space between header and items */
   border-bottom: 2px solid #ccc; /* line under headers */
 }
-
-/* Add additional styling for individual cells if needed */
-
-
-/* You can add additional styling for other components as needed */

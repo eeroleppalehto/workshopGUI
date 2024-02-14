@@ -1,59 +1,98 @@
 import React, { useEffect, useState } from 'react';
 import GaugeChart from 'react-gauge-chart';
+import { getDatabase, ref, onValue } from 'firebase/database';
 
-const TemperatureGauge: React.FC = () => {
+const TemperatureGauge = () => {
     const [temperature, setTemperature] = useState<number | null>(null);
+    const [machineIndex, setMachineIndex] = useState(1);
+    const [timers, setTimers] = useState(Array(8).fill(0));
+    const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
-        // Define the function to fetch temperature
-        const fetchTemperature = async () => {
-            try {
-                const response = await fetch('http://localhost:3001/temperature');
-                const data = await response.json();
-                setTemperature(data.temperature);
-            } catch (error) {
-                console.error("Failed to fetch temperature:", error);
-                // Handle error case, e.g., set temperature to a default value or show an error message
-            }
+        const db = getDatabase();
+        const temperatureRef = ref(db, `maschines/${machineIndex}/temperature`);
+
+        const unsubscribe = onValue(temperatureRef, (snapshot) => {
+            const newTemperature = snapshot.val();
+            setTemperature(newTemperature);
+        });
+
+        return () => unsubscribe();
+    }, [machineIndex]);
+
+    useEffect(() => {
+        const startTimers = () => {
+            const id = setInterval(() => {
+                setTimers((prevTimers) => {
+                    let reset = false;
+                    const updatedTimers = prevTimers.map((timer, index, arr) => {
+                        // Increment the current timer or maintain as is
+                        if (index === 0 || arr[index - 1] >= 60) {
+                            // Check if the 5th machine's timer exceeds 5 minutes
+                            if (index === 4 && timer >= 300) {
+                                reset = true;
+                                return 0; // Reset the 5th timer immediately
+                            }
+                            return timer + 1;
+                        }
+                        return timer;
+                    });
+                    // Reset and continue the loop from machine 1
+                    if (reset) {
+                        return Array(5).fill(0);
+                    }
+                    return updatedTimers;
+                });
+            }, 1000);
+
+            setIntervalId(id);
         };
 
-        fetchTemperature();
-        // Optionally, set an interval to fetch the temperature periodically, e.g., every 5 seconds
-        const intervalId = setInterval(fetchTemperature, 5000); // 5000 ms = 5 seconds
+        startTimers();
 
-        // Cleanup function to clear the interval when the component unmounts
-        return () => clearInterval(intervalId);
-    }, []); // Empty dependency array means this effect runs once on component mount and sets up an interval
+        return () => {
+            if (intervalId) clearInterval(intervalId);
+        };
+    }, []);
 
-    // Assuming the temperature range is 0 to 500
-    const maxTemperature = 500;
-    // Calculate the percentage for the gauge
+    useEffect(() => {
+        // Find the active machine based on the timers
+        const activeMachineIndex = timers.findIndex(timer => timer > 0 && timer <= 60);
+        let nextMachineIndex = activeMachineIndex + 1;
+
+        // Reset to machine 1 after 5th machine's timer
+        if (nextMachineIndex > 5 || timers[4] >= 300) {
+            nextMachineIndex = 1;
+        }
+
+        setMachineIndex(nextMachineIndex);
+    }, [timers]);
+
+
+    const maxTemperature = 1000;
     const percentage = temperature ? temperature / maxTemperature : 0;
 
     return (
-        <div style={{
-            position: 'relative',
-            width: '500px', // Increase the width as needed
-            height: '300px', // Increase the height as needed
-            margin: 'auto'
-        }}>
-            <GaugeChart id="temperature-gauge"
-                        nrOfLevels={30} // Adjust the number of levels/colors as needed
-                        colors={["#38ff00", "#FDD250", "#F33F3F"]}
-                        arcWidth={0.2}
-                        percent={percentage}
-                        textColor={"#000000"}
-                        needleColor={"#464A4F"}
-                        needleBaseColor={"#464A4F"} />
+        <div style={{ position: 'relative', width: '500px', height: '300px', margin: 'auto' }}>
+            <GaugeChart
+                id="temperature-gauge"
+                nrOfLevels={30}
+                colors={["#38ff00", "#FDD250", "#F33F3F"]}
+                arcWidth={0.2}
+                percent={percentage}
+                textColor={"#000000"}
+                needleColor={"#464A4F"}
+                needleBaseColor={"#464A4F"}
+            />
             {temperature !== null && (
                 <div style={{
                     position: 'absolute',
                     width: '100%',
                     textAlign: 'center',
-                    bottom: '20%', // Adjust based on the new size
-                    fontSize: '22px', // Adjust as needed
-                    color: '#000000', // Match your design
-                    fontWeight: 'bold' // Optional: makes the text easier to read
+                    bottom: '20%',
+                    fontSize: '22px',
+                    color: '#000000',
+                    fontWeight: 'bold'
                 }}>
                     {temperature}°C
                 </div>

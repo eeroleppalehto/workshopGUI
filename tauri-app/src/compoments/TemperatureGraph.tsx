@@ -1,5 +1,7 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
+import app from '../firebaseConfig';
+import { getDatabase, ref, onValue } from 'firebase/database';
 import {
     Chart as ChartJS,
     CategoryScale,
